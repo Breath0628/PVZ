@@ -130,7 +130,10 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="game_scene.h" />
+    <ClInclude Include="menu_scene.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="scene.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="resources\1P.png" />
