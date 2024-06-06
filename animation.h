@@ -2,6 +2,7 @@
 #include "atlas.h"
 #include "utli.h"
 #include <graphics.h>
+#include <functional>
 
 class Animation
 {
@@ -46,6 +47,7 @@ public:
 			if (idx_frame >= atlas->get_size());
 			{
 				idx_frame = is_loop ? 0 : atlas->get_size() - 1;
+				if (!is_loop && callback)callback(); 
 			}
 		}
 	}
@@ -53,10 +55,16 @@ public:
 		//渲染
 		puimage_alpha(x, y, atlas->get_image(idx_frame));
 	}
+	void set_callback(std::function<void()> callback){
+		//设置图集结束时的回调函数 
+		this->callback = callback;
+	}
+
 private:
 	int timer = 0;//计时器
 	int interval = 0;//帧间隔
 	int idx_frame = 0;//帧索引
 	bool is_loop = true; //是否循环
-	Atlas* atlas = nullptr;
+	Atlas* atlas = nullptr; //图集
+	std::function<void()> callback;//回调函数
 };
