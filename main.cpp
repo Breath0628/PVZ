@@ -7,6 +7,7 @@
 #include "scene_manager.h"
 #include "atlas.h"
 #include "utli.h"
+#include "def.h"
 
 Scene* menu_scene = nullptr;
 Scene* game_scene = nullptr;
