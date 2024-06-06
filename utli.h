@@ -1,5 +1,6 @@
 #pragma once
 #include <graphics.h>
+#pragma comment(lib,"MSIMG32.LIB")
 
 inline void flip_image(IMAGE* src,IMAGE* dst){
 	//Í¼Æ¬·­×ª
@@ -29,3 +30,10 @@ void flip_atlas(Atlas& src, Atlas& dst) {
 	}
 }
 
+inline void puimage_alpha(int dst_x, int dst_y, IMAGE* img) {
+//Ïû³ý¿Õ°×±³¾°µÄÍ¼Æ¬¼ÓÔØ
+	int w = img->getwidth();
+	int h = img->getheight();
+	AlphaBlend(GetImageHDC(GetWorkingImage()), dst_x, dst_y, w, h,
+		GetImageHDC(img), 0, 0, w, h, { AC_SRC_OVER,0,255,AC_SRC_ALPHA });
+}
