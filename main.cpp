@@ -5,11 +5,14 @@
 #include "game_scene.h"
 #include "selector_scene.h"
 #include "scene_manager.h"
+#include "atlas.h"
+#include "utli.h"
 
 Scene* menu_scene = nullptr;
 Scene* game_scene = nullptr;
 Scene* selector_scene = nullptr;
 SceneManager* scene_manager;
+
 
 int main() {
 	ExMessage msg;
