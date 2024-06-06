@@ -1,5 +1,6 @@
 #pragma once
 #include "atlas.h"
+#include "utli.h"
 #include <graphics.h>
 
 class Animation
@@ -48,7 +49,10 @@ public:
 			}
 		}
 	}
-
+	void on_draw(int x,int y)const {
+		//äÖÈ¾
+		puimage_alpha(x, y, atlas->get_image(idx_frame));
+	}
 private:
 	int timer = 0;//¼ÆÊ±Æ÷
 	int interval = 0;//Ö¡¼ä¸ô
