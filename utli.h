@@ -18,7 +18,7 @@ inline void flip_image(IMAGE* src,IMAGE* dst){
 	}
 }
 
-void flip_altas(Atlas& src, Atlas& dst) {
+void flip_atlas(Atlas& src, Atlas& dst) {
 	//由图集得到翻转图集
 	dst.clear();
 	for (size_t i = 0; i < src.get_size(); i++)
@@ -29,7 +29,3 @@ void flip_altas(Atlas& src, Atlas& dst) {
 	}
 }
 
-void load_game_resources() {
-
-
-}

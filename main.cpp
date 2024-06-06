@@ -18,7 +18,7 @@ SceneManager* scene_manager;
 int main() {
 	ExMessage msg;
 	const int FPS = 60;
-	
+	load_game_resources();
 	initgraph(1280, 720);
 	
 	BeginBatchDraw();
