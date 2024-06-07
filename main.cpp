@@ -39,8 +39,13 @@ int main() {
 		{
 			scene_manager->on_input(msg);
 		}
+		//每帧逻辑更新时间
+		static DWORD last_tick_time = GetTickCount();
+		DWORD current_tick_time = GetTickCount();
+		DWORD delta_tick = current_tick_time - last_tick_time;
+		scene_manager->on_update(delta_tick);
+		last_tick_time=current_tick_time;
 
-		scene_manager->on_update();
 		cleardevice();
 		scene_manager->on_draw();
 		FlushBatchDraw();

@@ -15,7 +15,7 @@ public:
 	void on_enter() {
 		cout << "Enter Game Scene" << endl;
 	}
-	void on_update() {
+	void on_update(int delta) {
 		cout << "GameScene is running!" << endl;
 	}
 	void on_draw() {
