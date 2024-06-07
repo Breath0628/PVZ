@@ -21,14 +21,19 @@ public:
 		//cout << "Enter Main Menu" << endl;
 		animation_peashooter_run_right.set_atlas(&atlas_peashooter_run_right);
 		animation_peashooter_run_right.set_interval(75);
-		animation_peashooter_run_right.set_loop(true);
+		animation_peashooter_run_right.set_loop(1);
+		animation_peashooter_run_right.set_callback([]() {
+			scene_manager->switch_to(SceneManager::SceneType::Game);
+			});
 	}
 	void on_update(int delta){
 		//cout << "Main Menu is running!" << endl;
+		
 		animation_peashooter_run_right.on_update(delta);
 	}
 	void on_draw(){
-		outtextxy(10, 10, _T("Main Menu"));
+		//outtextxy(10, 10, _T("Main Menu"));
+		animation_peashooter_run_right.on_draw(100, 100);
 	}
 	void on_input(const ExMessage &msg) {
 		if (msg.message == WM_KEYDOWN) {

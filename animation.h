@@ -44,7 +44,7 @@ public:
 		if (timer >= interval) {
 			timer = 0;
 			idx_frame++;
-			if (idx_frame >= atlas->get_size());
+			if (idx_frame >= atlas->get_size())
 			{
 				idx_frame = is_loop ? 0 : atlas->get_size() - 1;
 				if (!is_loop && callback)callback(); 

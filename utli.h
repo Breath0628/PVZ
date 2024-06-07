@@ -8,7 +8,7 @@ inline void flip_image(IMAGE* src,IMAGE* dst){
 	int h = src->getheight();
 	Resize(dst, w, h);
 	DWORD* src_buffer = GetImageBuffer(src);
-	DWORD* dst_buffer = GetImageBuffer(src);
+	DWORD* dst_buffer = GetImageBuffer(dst);
 	for (size_t y = 0;y< h;y++) {
 		for (size_t x = 0; x < w; x++)
 		{
