@@ -58,7 +58,7 @@ private:
 		animation_peashooter.set_atlas(&atlas_peashooter_idle_right);
 		animation_sunflower.set_atlas(&atlas_sunflower_idle_right);
 
-		animation_peashooter.set_interval(50);
+		animation_peashooter.set_interval(100);
 		animation_sunflower.set_interval(100);
 
 		//设置静态元素位置 爆炸
@@ -99,10 +99,56 @@ private:
 		//角色动画更新
 		animation_peashooter.on_update(delta);
 		animation_sunflower.on_update(delta);
+
+		scorll_line_x += 5;//基准线更新
+		if (scorll_line_x >= img_peashooter_selector_background_left.getwidth()) scorll_line_x=0;
+			
 	}
 	void on_draw(const Camera &camera) {
-		//渲染静态素材
+		
 		putimage(0, 0, &img_selector_background);
+		//渲染背景动态图
+
+		IMAGE* p1_scorll_bk = nullptr;
+		IMAGE* p2_scorll_bk = nullptr;
+
+		switch (player_type_1)
+		{
+		case SelectorScene::PlayerType::Peashooter:
+			p1_scorll_bk = &img_peashooter_selector_background_right;
+			break;
+		case SelectorScene::PlayerType::Sunflower:
+			p1_scorll_bk = &img_sunflower_selector_background_right;
+			break;
+		default:
+			p1_scorll_bk = &img_peashooter_selector_background_right;
+			break;
+		}
+
+		switch (player_type_2)
+		{
+		case SelectorScene::PlayerType::Peashooter:
+			p2_scorll_bk = &img_peashooter_selector_background_left;
+			break;
+		case SelectorScene::PlayerType::Sunflower:
+			p2_scorll_bk = &img_sunflower_selector_background_left;
+			break;
+		default:
+			p2_scorll_bk = &img_peashooter_selector_background_left;
+			break;
+		}
+		puimage_alpha(scorll_line_x - p1_scorll_bk->getwidth(), 0, p1_scorll_bk);
+		puimage_alpha(scorll_line_x, 0,
+			p1_scorll_bk->getwidth() - scorll_line_x, 0,
+			p1_scorll_bk, 0, 0);
+
+		puimage_alpha(getwidth() - p2_scorll_bk->getwidth(), 0, p2_scorll_bk->getwidth() - scorll_line_x, 0,
+			p2_scorll_bk, scorll_line_x, 0);
+
+		puimage_alpha(getwidth() - scorll_line_x, 0, p2_scorll_bk);
+
+		//渲染静态素材
+	
 
 		puimage_alpha(pos_img_VS.x,pos_img_VS.y,&img_VS);
 
@@ -117,14 +163,20 @@ private:
 
 		puimage_alpha(pos_img_tip.x, pos_img_tip.y, &img_selector_tip);
 		
+
+
 		//渲染1p 2p角色动画
 		switch (player_type_1)
 		{
 		case SelectorScene::PlayerType::Peashooter:
 			animation_peashooter.on_draw(camera, pos_animation_1P.x, pos_animation_1P.y);
+			pos_img_1P_name.x = pos_img_1P_gravestone.x + (img_gravestone_right.getwidth() - textwidth(str_peashooter_name)) / 2;
+			outtexy_shaded(pos_img_1P_name.x, pos_img_1P_name.y, str_peashooter_name);
 			break;
 		case SelectorScene::PlayerType::Sunflower:
 			animation_sunflower.on_draw(camera, pos_animation_1P.x, pos_animation_1P.y);
+			pos_img_1P_name.x = pos_img_1P_gravestone.x + (img_gravestone_right.getwidth() - textwidth(str_sunflower_name)) / 2;
+			outtexy_shaded(pos_img_1P_name.x, pos_img_1P_name.y, str_sunflower_name);
 			break;
 		default:
 			break;
@@ -134,13 +186,18 @@ private:
 		{
 		case SelectorScene::PlayerType::Peashooter:
 			animation_peashooter.on_draw(camera, pos_animation_2P.x, pos_animation_2P.y);
+			pos_img_2P_name.x = pos_img_2P_gravestone.x + (img_gravestone_left.getwidth() - textwidth(str_peashooter_name)) / 2;
+			outtexy_shaded(pos_img_2P_name.x, pos_img_2P_name.y, str_peashooter_name);
 			break;
 		case SelectorScene::PlayerType::Sunflower:
 			animation_sunflower.on_draw(camera, pos_animation_2P.x, pos_animation_2P.y);
+			pos_img_2P_name.x = pos_img_2P_gravestone.x + (img_gravestone_left.getwidth() - textwidth(str_sunflower_name)) / 2;
+			outtexy_shaded(pos_img_2P_name.x, pos_img_2P_name.y, str_sunflower_name);
 			break;
 		default:
 			break;
 		}
+
 
 	}
 	void on_input(const ExMessage& msg) {
@@ -176,4 +233,18 @@ private:
 
 	PlayerType player_type_1 = PlayerType::Peashooter;//默认角色类型
 	PlayerType player_type_2 = PlayerType::Sunflower;
+
+	LPCTSTR str_peashooter_name = _T("豌豆射手");
+	LPCTSTR str_sunflower_name = _T("向日葵");
+
+	int scorll_line_x= 0; //背景板滚动线
+
+
+private:
+	void outtexy_shaded(int x,int y ,LPCTSTR str) {
+		settextcolor(RGB(45, 45, 45));
+		outtextxy(x + 3, y + 3, str);
+		settextcolor(RGB(255, 255, 255));
+		outtextxy(x, y, str);
+	}
 };
