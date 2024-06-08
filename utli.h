@@ -1,6 +1,8 @@
 #pragma once
 #include <graphics.h>
 #pragma comment(lib,"MSIMG32.LIB")
+#include "camera.h"
+#include "vector2.h"
 
 inline void flip_image(IMAGE* src,IMAGE* dst){
 	//图片翻转
@@ -36,4 +38,12 @@ inline void puimage_alpha(int dst_x, int dst_y, IMAGE* img) {
 	int h = img->getheight();
 	AlphaBlend(GetImageHDC(GetWorkingImage()), dst_x, dst_y, w, h,
 		GetImageHDC(img), 0, 0, w, h, { AC_SRC_OVER,0,255,AC_SRC_ALPHA });
+}
+inline void puimage_alpha(const Camera camera,int dst_x, int dst_y, IMAGE* img) {
+	//无背景且针对摄像机的渲染
+	int w = img->getwidth();
+	int h = img->getheight();
+	const Vector2<float>& pos_camera = camera.getPos();
+	AlphaBlend(GetImageHDC(GetWorkingImage()), (int)(dst_x- pos_camera.x), (int)(dst_y-pos_camera.y), //针对摄像机的坐标转化
+		w, h,GetImageHDC(img), 0, 0, w, h, { AC_SRC_OVER,0,255,AC_SRC_ALPHA });
 }

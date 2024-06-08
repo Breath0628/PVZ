@@ -31,6 +31,7 @@ extern IMAGE img_peashooter_selector_background_right; // 选角界面朝向右的婉逗射
 
 extern IMAGE img_sunflower_selector_background_left;   // 选角界面朝向左的龙日葵背景图片
 extern IMAGE img_sunflower_selector_background_right;  // 选角界面朝向右的龙日葵背景图片
+
 extern Atlas atlas_peashooter_idle_left;               // 婉逗射手朝向左的默认动画图集
 extern Atlas atlas_sunflower_idle_right;              
 extern Atlas atlas_peashooter_idle_right;
@@ -41,13 +42,23 @@ class SelectorScene :public Scene
 public:
 	SelectorScene() = default;
 	~SelectorScene() = default;
+private:
+	enum class PlayerType {
+		Peashooter = 0,
+		Sunflower, 
+		Invalid
+	};
 
+
+private:
 	void on_enter() {
 		cout << "selector is came" << endl;
 		//为角色动画设置图集和帧间隔
-		animation_peashooter.set_atlas(&atlas_peashooter_idle_left);
+	
+		animation_peashooter.set_atlas(&atlas_peashooter_idle_right);
 		animation_sunflower.set_atlas(&atlas_sunflower_idle_right);
-		animation_peashooter.set_interval(100);
+
+		animation_peashooter.set_interval(50);
 		animation_sunflower.set_interval(100);
 
 		//设置静态元素位置 爆炸
@@ -85,12 +96,12 @@ public:
 
 	}
 	void on_update(int delta) {
-
-		cout << "selector is update" << endl;
+		//角色动画更新
+		animation_peashooter.on_update(delta);
+		animation_sunflower.on_update(delta);
 	}
 	void on_draw(const Camera &camera) {
-		//渲染动画和素材
-		cout << "selector is draw" << endl;
+		//渲染静态素材
 		putimage(0, 0, &img_selector_background);
 
 		puimage_alpha(pos_img_VS.x,pos_img_VS.y,&img_VS);
@@ -106,6 +117,31 @@ public:
 
 		puimage_alpha(pos_img_tip.x, pos_img_tip.y, &img_selector_tip);
 		
+		//渲染1p 2p角色动画
+		switch (player_type_1)
+		{
+		case SelectorScene::PlayerType::Peashooter:
+			animation_peashooter.on_draw(camera, pos_animation_1P.x, pos_animation_1P.y);
+			break;
+		case SelectorScene::PlayerType::Sunflower:
+			animation_sunflower.on_draw(camera, pos_animation_1P.x, pos_animation_1P.y);
+			break;
+		default:
+			break;
+		}
+
+		switch (player_type_2)
+		{
+		case SelectorScene::PlayerType::Peashooter:
+			animation_peashooter.on_draw(camera, pos_animation_2P.x, pos_animation_2P.y);
+			break;
+		case SelectorScene::PlayerType::Sunflower:
+			animation_sunflower.on_draw(camera, pos_animation_2P.x, pos_animation_2P.y);
+			break;
+		default:
+			break;
+		}
+
 	}
 	void on_input(const ExMessage& msg) {
 		
@@ -137,4 +173,7 @@ private:
 	
 	Animation animation_peashooter; //豌豆动画
 	Animation animation_sunflower;//向日葵动画
+
+	PlayerType player_type_1 = PlayerType::Peashooter;//默认角色类型
+	PlayerType player_type_2 = PlayerType::Sunflower;
 };

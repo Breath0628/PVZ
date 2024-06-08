@@ -3,6 +3,8 @@
 #include "utli.h"
 #include <graphics.h>
 #include <functional>
+#include "camera.h"
+
 
 class Animation
 {
@@ -54,6 +56,10 @@ public:
 	void on_draw(int x,int y)const {
 		//渲染
 		puimage_alpha(x, y, atlas->get_image(idx_frame));
+	}
+	void on_draw(const Camera& camera,int x, int y)const {
+		//带摄像机渲染
+		puimage_alpha(camera,x, y, atlas->get_image(idx_frame));
 	}
 	void set_callback(std::function<void()> callback){
 		//设置图集结束时的回调函数 
