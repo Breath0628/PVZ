@@ -47,7 +47,8 @@ public:
 	}
 	void on_input(const ExMessage &msg) {
 		if (msg.message == WM_KEYDOWN) {
-			scene_manager->switch_to(SceneManager::SceneType::Selector);
+			//scene_manager->switch_to(SceneManager::SceneType::Selector);
+			camera.shake(10,350);
 		}
 	};
 	void on_exit(){
