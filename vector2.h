@@ -22,10 +22,15 @@ public:
 		return Vector2<T>(x - vec.x, y - vec.y);
 	}
 
-
 	T operator*(const Vector2<T>& vec)const//向量相乘 返回值为数值
 	{
 		return x * vec.x + y * vec.y;
+	}
+
+
+	Vector2<T> operator*(T val)const//向量乘数值 返回值为向量
+	{
+		return  Vector2<T>(val * x, val * y);
 	}
 
 	void operator+=(const Vector2<T>& vec) {
@@ -39,12 +44,7 @@ public:
 		y -= vec.y;
 	}
 
-	void operator*=(T val)//向量乘数值 返回值为向量
-	{
-		x = val * x;
-		y = val * y;
-	}
-
+	
 	float length() //返回向量长度
 	{
 		return sqrt(x * x + y * y);
