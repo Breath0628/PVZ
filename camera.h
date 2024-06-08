@@ -18,7 +18,7 @@ public:
 
 	void on_update(int delta) {
 		const Vector2 <float> speed = { -0.35f, 0 };
-		position += speed * float(delta);
+		position += speed * float(delta);  
 	}
 
 private:
