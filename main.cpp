@@ -1,9 +1,11 @@
 #include <graphics.h>
 #include <iostream>
 #include "scene.h"
+
 #include "menu_scene.h"
 #include "game_scene.h"
 #include "selector_scene.h"
+
 #include "scene_manager.h"
 #include "atlas.h"
 #include "utli.h"
@@ -35,8 +37,8 @@ int main() {
 	{
 		DWORD frame_start_time = GetTickCount();
 
-		while (peekmessage(&msg))
-		{
+ 		while (peekmessage(&msg, EX_KEY))
+		{ 
 			scene_manager->on_input(msg);
 		}
 
@@ -44,7 +46,7 @@ int main() {
 		static DWORD last_tick_time = GetTickCount();
 		DWORD current_tick_time = GetTickCount();
 		DWORD delta_tick = current_tick_time - last_tick_time;
-		scene_manager->on_update(delta_tick);
+		scene_manager->on_update(delta_tick); 
 		last_tick_time=current_tick_time;
 
 		cleardevice();

@@ -12,9 +12,11 @@ atlas_:Í¼¼¯×ÊÔ´
 
 */
 
-vector<IMAGE> a;
+
 IMAGE img_menu_background;//Ö÷²Ëµ¥±³¾°
 
+
+//Ñ¡½Ç½çÃæËØ²Ä
 IMAGE img_VS;//vsÒÕÊõ×ÖÍ¼Æ¬
 IMAGE img_1P;//1pÎÄ±¾Í¼
 IMAGE img_2P;//2pÎÄ±¾Í¼
@@ -41,6 +43,8 @@ IMAGE img_peashooter_selector_background_right; // Ñ¡½Ç½çÃæ³¯ÏòÓÒµÄÍñ¶ºÉäÊÖ±³¾°Í
 IMAGE img_sunflower_selector_background_left;   // Ñ¡½Ç½çÃæ³¯Ïò×óµÄÁúÈÕ¿û±³¾°Í¼Æ¬
 IMAGE img_sunflower_selector_background_right;  // Ñ¡½Ç½çÃæ³¯ÏòÓÒµÄÁúÈÕ¿û±³¾°Í¼Æ¬
 
+
+//ÓÎÏ·½çÃæËØ²Ä
 IMAGE img_sky;                                  // Ìì¿ÕÍ¼Æ¬
 IMAGE img_hills;                                // É½ÂöÍ¼Æ¬
 IMAGE img_platform_large;                       //´óĞÍÆ½Ì¨Í¼Æ¬

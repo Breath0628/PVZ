@@ -34,7 +34,7 @@ public:
 		case SceneManager::SceneType::Game:
 			current_scene = game_scene;
 			break;
-		case SceneType::Selector:
+		case SceneManager::SceneType::Selector:
 			current_scene = selector_scene;
 			break;
 		default:
