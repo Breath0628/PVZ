@@ -45,7 +45,7 @@ public:
 		now_platform1.shape = {
 			(float)now_platform1.render_pos.y + img_platform_small.getheight()/2,//对shape.y赋值
 			(float)now_platform1.render_pos.x + 40,//left
-			(float)now_platform1.render_pos.x + img_platform_large.getwidth() - 40//right
+			(float)now_platform1.render_pos.x + img_platform_small.getwidth() - 40//right
 		};
 
 		Platform& now_platform2 = platform_list[2];
@@ -54,7 +54,7 @@ public:
 		now_platform2.shape = {
 			(float)now_platform2.render_pos.y + img_platform_small.getheight() / 2,//对shape.y赋值
 			(float)now_platform2.render_pos.x + 40,//left
-			(float)now_platform2.render_pos.x + img_platform_large.getwidth() - 40//right
+			(float)now_platform2.render_pos.x + img_platform_small.getwidth() - 40//right
 		};
 
 		Platform& now_platform3 = platform_list[3];
@@ -63,7 +63,7 @@ public:
 		now_platform3.shape = {
 			(float)now_platform3.render_pos.y + img_platform_small.getheight() / 2,//对shape.y赋值
 			(float)now_platform3.render_pos.x + 40,//left
-			(float)now_platform3.render_pos.x + img_platform_large.getwidth() - 40//right
+			(float)now_platform3.render_pos.x + img_platform_small.getwidth() - 40//right
 		};
 	
 	}
@@ -72,6 +72,12 @@ public:
 	}
 
 	void on_draw(const Camera& camera) {
+		if (is_debug)
+		{
+			settextcolor(RGB(255, 0, 0));
+			outtextxy(15, 15, _T("调试模式,Q键关闭"));
+
+		}
 		//绘制背景图
 		puimage_alpha(camera, pos_img_sky, &img_sky);
 		puimage_alpha(camera, pos_img_hills, &img_hills);
@@ -85,7 +91,15 @@ public:
 
 	}
 	void on_input(const ExMessage& msg) {
-	
+		switch (msg.message)
+		{
+		case WM_KEYUP:
+			//'q'开启调试
+			if (msg.vkcode == 0x51)is_debug = !is_debug;
+			break;
+		default:
+			break;
+		}
 
 	};
 	void on_exit() {

@@ -18,6 +18,7 @@ Scene* selector_scene = nullptr;
 SceneManager* scene_manager;
 Camera main_camera;
 std::vector<Platform> platform_list; //平台对象
+bool is_debug=0;
 
 int main() {
 	ExMessage msg;
