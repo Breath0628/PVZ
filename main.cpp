@@ -7,7 +7,6 @@
 #include "selector_scene.h"
 
 #include "scene_manager.h"
-#include "platform.h"
 #include "atlas.h"
 #include "utli.h"
 #include "def.h"
@@ -17,7 +16,6 @@ Scene* game_scene = nullptr;
 Scene* selector_scene = nullptr;
 SceneManager* scene_manager;
 Camera main_camera;
-std::vector<Platform> platform_list; //平台对象
 
 int main() {
 	ExMessage msg;
