@@ -1,11 +1,15 @@
 #pragma once
 #include "scene.h"
 #include "scene_manager.h"
-#include <iostream>
 #include "camera.h"
-using namespace std;
+#include "utli.h"
 
 extern SceneManager* scene_manager;
+extern Camera main_camera;
+extern IMAGE img_sky;                                  // 天空图片
+extern IMAGE img_hills;                                // 山脉图片
+extern IMAGE img_platform_large;                       //大型平台图片
+extern IMAGE img_platform_small;                       //小型平台图片
 
 class GameScene :public Scene
 {
@@ -14,24 +18,32 @@ public:
 	~GameScene() = default;
 
 	void on_enter() {
-		cout << "Enter Game Scene" << endl;
+		//背景图定位
+		pos_img_sky.x = (getwidth() - img_sky.getwidth()) / 2;
+		pos_img_sky.y= (getheight() - img_sky.getheight()) / 2;
+
+		pos_img_hills.x = (getwidth() - img_hills.getwidth()) / 2;
+		pos_img_hills.y = (getheight() - img_hills.getheight()) / 2;
+
 	}
 	void on_update(int delta) {
-		cout << "GameScene is running!" << endl;
+	
 	}
 	void on_draw(const Camera& camera) {
-		outtextxy(10, 10, _T("Game Scene Draw"));
+		puimage_alpha(camera, pos_img_sky, &img_sky);
+		puimage_alpha(camera, pos_img_hills, &img_hills);
+
 	}
 	void on_input(const ExMessage& msg) {
-		if (msg.message == WM_KEYDOWN) {
-			scene_manager->switch_to(SceneManager::SceneType::Menu);
-		}
-		
+	
+
 	};
 	void on_exit() {
-		cout << "Game Scene Exit!" << endl;
+		
 	}
 
 private:
+	POINT pos_img_sky = { 0 }; //天空位置
+	POINT pos_img_hills = { 0 };//山脉位置
 
 };

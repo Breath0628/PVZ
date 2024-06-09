@@ -54,3 +54,14 @@ inline void puimage_alpha(int dst_x, int dst_y,int width,int height, IMAGE* img,
 	AlphaBlend(GetImageHDC(GetWorkingImage()), dst_x, dst_y, w, h,
 		GetImageHDC(img), src_x, src_y, w, h, { AC_SRC_OVER,0,255,AC_SRC_ALPHA });
 }
+
+inline void puimage_alpha(const Camera camera,POINT pos, IMAGE* img) {
+	//无背景且针对摄像机的渲染
+	int dst_x = pos.x; 
+	int dst_y = pos.y;
+	int w = img->getwidth();
+	int h = img->getheight();
+	const Vector2<float>& pos_camera = camera.getPos();
+	AlphaBlend(GetImageHDC(GetWorkingImage()), (int)(dst_x - pos_camera.x), (int)(dst_y - pos_camera.y), //针对摄像机的坐标转化
+		w, h, GetImageHDC(img), 0, 0, w, h, { AC_SRC_OVER,0,255,AC_SRC_ALPHA });
+}
