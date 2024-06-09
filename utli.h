@@ -47,6 +47,7 @@ inline void puimage_alpha(const Camera camera,int dst_x, int dst_y, IMAGE* img) 
 	AlphaBlend(GetImageHDC(GetWorkingImage()), (int)(dst_x- pos_camera.x), (int)(dst_y-pos_camera.y), //针对摄像机的坐标转化
 		w, h,GetImageHDC(img), 0, 0, w, h, { AC_SRC_OVER,0,255,AC_SRC_ALPHA });
 }
+
 inline void puimage_alpha(int dst_x, int dst_y,int width,int height, IMAGE* img,int src_x,int src_y) {
 	//消除空白背景的图片加载 超出规定长宽裁剪
 	int w = width>0?width:img->getwidth();
