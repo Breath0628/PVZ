@@ -52,7 +52,7 @@ private:
 
 private:
 	void on_enter() {
-		cout << "selector is came" << endl;
+	
 		//为角色动画设置图集和帧间隔
 	
 		animation_peashooter.set_atlas(&atlas_peashooter_idle_right);
@@ -94,6 +94,10 @@ private:
 		pos_2P_selector_btn_right.x = pos_img_2P_gravestone.x + img_gravestone_left.getwidth();
 		pos_2P_selector_btn_right.y = pos_1P_selector_btn_left.y;
 
+
+		//input_timer.set_one_shot(1);
+		//input_timer.set_wait_time(500);
+		
 	}
 	void on_update(int delta) {
 		//角色动画更新
@@ -137,6 +141,7 @@ private:
 			p2_scorll_bk = &img_peashooter_selector_background_left;
 			break;
 		}
+
 		puimage_alpha(scorll_line_x - p1_scorll_bk->getwidth(), 0, p1_scorll_bk);
 		puimage_alpha(scorll_line_x, 0,
 			p1_scorll_bk->getwidth() - scorll_line_x, 0,
@@ -149,7 +154,6 @@ private:
 
 		//渲染静态素材
 	
-
 		puimage_alpha(pos_img_VS.x,pos_img_VS.y,&img_VS);
 
 		puimage_alpha(pos_img_1P.x, pos_img_1P.y, &img_1P);
@@ -166,45 +170,109 @@ private:
 
 
 		//渲染1p 2p角色动画
+		animation_peashooter.on_draw(camera, pos_animation_1P.x, pos_animation_1P.y);
+
+		animation_sunflower.on_draw(camera, pos_animation_2P.x, pos_animation_2P.y);
+
+		//渲染名字
 		switch (player_type_1)
 		{
 		case SelectorScene::PlayerType::Peashooter:
-			animation_peashooter.on_draw(camera, pos_animation_1P.x, pos_animation_1P.y);
 			pos_img_1P_name.x = pos_img_1P_gravestone.x + (img_gravestone_right.getwidth() - textwidth(str_peashooter_name)) / 2;
 			outtexy_shaded(pos_img_1P_name.x, pos_img_1P_name.y, str_peashooter_name);
 			break;
 		case SelectorScene::PlayerType::Sunflower:
-			animation_sunflower.on_draw(camera, pos_animation_1P.x, pos_animation_1P.y);
 			pos_img_1P_name.x = pos_img_1P_gravestone.x + (img_gravestone_right.getwidth() - textwidth(str_sunflower_name)) / 2;
 			outtexy_shaded(pos_img_1P_name.x, pos_img_1P_name.y, str_sunflower_name);
-			break;
-		default:
 			break;
 		}
 
 		switch (player_type_2)
 		{
 		case SelectorScene::PlayerType::Peashooter:
-			animation_peashooter.on_draw(camera, pos_animation_2P.x, pos_animation_2P.y);
 			pos_img_2P_name.x = pos_img_2P_gravestone.x + (img_gravestone_left.getwidth() - textwidth(str_peashooter_name)) / 2;
 			outtexy_shaded(pos_img_2P_name.x, pos_img_2P_name.y, str_peashooter_name);
 			break;
 		case SelectorScene::PlayerType::Sunflower:
-			animation_sunflower.on_draw(camera, pos_animation_2P.x, pos_animation_2P.y);
 			pos_img_2P_name.x = pos_img_2P_gravestone.x + (img_gravestone_left.getwidth() - textwidth(str_sunflower_name)) / 2;
 			outtexy_shaded(pos_img_2P_name.x, pos_img_2P_name.y, str_sunflower_name);
 			break;
-		default:
-			break;
+
 		}
 
 
 	}
 	void on_input(const ExMessage& msg) {
+		//角色选取 场景跳转
+		if (msg.message != WM_KEYUP) return;
 		
-		if (msg.message == WM_KEYDOWN) {
+		switch (msg.vkcode)
+		{
+		case 39://->
+			if (player_type_2 == PlayerType::Sunflower)
+			{
+				mciSendString(_T("play ui_confirm from 0"), NULL, 0, NULL);
+				player_type_2 = PlayerType::Peashooter;
+				animation_sunflower.set_atlas(&atlas_peashooter_idle_left); //注意方向
+			}
+			else
+			{
+				mciSendString(_T("play ui_confirm from 0"), NULL, 0, NULL);
+				player_type_2 = PlayerType::Sunflower;
+				animation_sunflower.set_atlas(&atlas_sunflower_idle_left);
+			}
+			break;
+
+		case 37://<-
+			if (player_type_2 == PlayerType::Sunflower)
+			{
+				mciSendString(_T("play ui_confirm from 0"), NULL, 0, NULL);
+				player_type_2 = PlayerType::Peashooter;
+				animation_sunflower.set_atlas(&atlas_peashooter_idle_left); //注意方向
+			}
+			else
+			{
+				mciSendString(_T("play ui_confirm from 0"), NULL, 0, NULL);
+				player_type_2 = PlayerType::Sunflower;
+				animation_sunflower.set_atlas(&atlas_sunflower_idle_left);
+			}
+
+			break;
+		case 68://D
+			if (player_type_1 == PlayerType::Sunflower)
+			{
+				mciSendString(_T("play ui_confirm from 0"), NULL, 0, NULL);
+				player_type_1 = PlayerType::Peashooter;
+				animation_peashooter.set_atlas(&atlas_peashooter_idle_right); //注意方向
+			}
+			else
+			{
+				mciSendString(_T("play ui_confirm from 0"), NULL, 0, NULL);
+				player_type_1 = PlayerType::Sunflower;
+				animation_peashooter.set_atlas(&atlas_sunflower_idle_right);
+			}
+
+			break;
+		case 65://A
+			if (player_type_1 == PlayerType::Sunflower)
+			{
+				mciSendString(_T("play ui_confirm from 0"), NULL, 0, NULL);
+				player_type_1 = PlayerType::Peashooter;
+				animation_peashooter.set_atlas(&atlas_peashooter_idle_right); //注意方向
+			}
+			else
+			{
+				mciSendString(_T("play ui_confirm from 0"), NULL, 0, NULL);
+				player_type_1 = PlayerType::Sunflower;
+				animation_peashooter.set_atlas(&atlas_sunflower_idle_right);
+			}
+			break;
+		case 13://回车
+			mciSendString(_T("play ui_confirm from 0"), NULL, 0, NULL);
 			scene_manager->switch_to(SceneManager::SceneType::Game);
+
 		}
+
 	};
 	void on_exit() {
 		
@@ -228,10 +296,11 @@ private:
 	POINT pos_2P_selector_btn_left = { 0 };//2P向左切换按钮位置
 	POINT pos_2P_selector_btn_right = { 0 };//2P 向右切换按钮位置
 	
-	Animation animation_peashooter; //豌豆动画
-	Animation animation_sunflower;//向日葵动画
+	Animation animation_peashooter; //豌豆动画 -->1p动画
+	Animation animation_sunflower;//向日葵动画-->2p动画
 
-	PlayerType player_type_1 = PlayerType::Peashooter;//默认角色类型
+
+	PlayerType player_type_1 = PlayerType::Peashooter;//1p 2p角色类型
 	PlayerType player_type_2 = PlayerType::Sunflower;
 
 	LPCTSTR str_peashooter_name = _T("豌豆射手");
@@ -239,6 +308,7 @@ private:
 
 	int scorll_line_x= 0; //背景板滚动线
 
+	
 
 private:
 	void outtexy_shaded(int x,int y ,LPCTSTR str) {
