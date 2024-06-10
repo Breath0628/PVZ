@@ -4,8 +4,13 @@
 #include "camera.h"
 #include "utli.h"
 #include "platform.h"
+#include "player.h"
+#include "sunflower_player.h"
+#include "peashooter_player.h"
 
 extern SceneManager* scene_manager;
+extern Player* player_1P ;//1p对象
+extern Player* player_2P ;//2p对象
 extern Camera main_camera;
 extern IMAGE img_sky;                                  // 天空图片
 extern IMAGE img_hills;                                // 山脉图片
@@ -68,16 +73,13 @@ public:
 	
 	}
 	void on_update(int delta) {
-	
+		//玩家更新
+		player_1P->on_update(delta);
+		player_2P->on_update(delta);
 	}
 
 	void on_draw(const Camera& camera) {
-		if (is_debug)
-		{
-			settextcolor(RGB(255, 0, 0));
-			outtextxy(15, 15, _T("调试模式,Q键关闭"));
-
-		}
+	
 		//绘制背景图
 		puimage_alpha(camera, pos_img_sky, &img_sky);
 		puimage_alpha(camera, pos_img_hills, &img_hills);
@@ -88,7 +90,12 @@ public:
 			platform.on_draw(camera);
 		}
 
+		if (is_debug)
+		{
+			settextcolor(RGB(255, 0, 0));
+			outtextxy(15, 15, _T("调试模式,Q键关闭"));
 
+		}
 	}
 	void on_input(const ExMessage& msg) {
 		switch (msg.message)

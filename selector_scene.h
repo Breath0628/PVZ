@@ -2,9 +2,12 @@
 #include "scene.h"
 #include "scene_manager.h"
 #include "animation.h"
-
+#include "peashooter_player.h"
+#include "sunflower_player.h"
 
 extern SceneManager* scene_manager; //场景管理器
+extern Player* player_1P;//1p对象
+extern Player* player_2P;//2p对象
 //引用资源
 extern IMAGE img_VS;//vs艺术字图片
 extern IMAGE img_1P;//1p文本图
@@ -275,7 +278,29 @@ private:
 
 	};
 	void on_exit() {
-		
+		//根据选角类型赋值玩家对象
+		switch (player_type_1)
+		{
+		case SelectorScene::PlayerType::Peashooter:
+			player_1P = new PeashooterPlayer();
+
+			break;
+		case SelectorScene::PlayerType::Sunflower:
+			player_1P = new SunflowerPlayer();
+			break;
+	
+		}
+		switch (player_type_2)
+		{
+		case SelectorScene::PlayerType::Peashooter:
+			player_2P = new PeashooterPlayer();
+
+			break;
+		case SelectorScene::PlayerType::Sunflower:
+			player_2P = new SunflowerPlayer();
+			break;
+
+		}
 	}
 
 private:

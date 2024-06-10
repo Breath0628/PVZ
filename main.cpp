@@ -5,8 +5,9 @@
 #include "menu_scene.h"
 #include "game_scene.h"
 #include "selector_scene.h"
-
 #include "scene_manager.h"
+
+#include "player.h"
 #include "platform.h"
 #include "atlas.h"
 #include "utli.h"
@@ -18,7 +19,9 @@ Scene* selector_scene = nullptr;
 SceneManager* scene_manager;
 Camera main_camera;
 std::vector<Platform> platform_list; //平台对象
-bool is_debug=0;
+bool is_debug=0;//调试模式
+Player* player_1P=nullptr;//1p对象
+Player* player_2P=nullptr;//2p对象
 
 int main() {
 	ExMessage msg;
