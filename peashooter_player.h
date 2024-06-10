@@ -27,7 +27,7 @@ public:
 
 	void on_update(int delta){
 		Player::on_update(delta);//调用父类方法
-		std::cout << "PeashooterPlayer update" << std::endl;
+	//	std::cout << "PeashooterPlayer update" << std::endl;
 	}
 private:
 

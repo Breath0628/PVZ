@@ -7,6 +7,7 @@
 #include "player.h"
 #include "sunflower_player.h"
 #include "peashooter_player.h"
+#include "animation.h"
 
 extern SceneManager* scene_manager;
 extern Player* player_1P ;//1p¶ÔÏó
