@@ -70,7 +70,9 @@ public:
 			(float)now_platform3.render_pos.x + 40,//left
 			(float)now_platform3.render_pos.x + img_platform_small.getwidth() - 40//right
 		};
-	
+		//对玩家定位
+		player_1P->pos = {200,50};
+		player_2P->pos = { 975,50 };
 	}
 	void on_update(int delta) {
 		//玩家更新
@@ -89,6 +91,9 @@ public:
 		{
 			platform.on_draw(camera);
 		}
+		//绘制玩家动画
+		player_1P->on_draw(camera);
+		player_2P->on_draw(camera);
 
 		if (is_debug)
 		{
@@ -96,8 +101,14 @@ public:
 			outtextxy(15, 15, _T("调试模式,Q键关闭"));
 
 		}
+		
+	
 	}
 	void on_input(const ExMessage& msg) {
+		//将消息传给玩家消息处理函数
+		player_1P->on_input(msg);
+		player_2P->on_input(msg);
+
 		switch (msg.message)
 		{
 		case WM_KEYUP:

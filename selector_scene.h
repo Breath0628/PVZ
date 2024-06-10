@@ -277,16 +277,17 @@ private:
 		}
 
 	};
-	void on_exit() {
+	void exit() { 
 		//根据选角类型赋值玩家对象
 		switch (player_type_1)
 		{
 		case SelectorScene::PlayerType::Peashooter:
 			player_1P = new PeashooterPlayer();
-
+			player_1P->id = Player::PlayerID::P1;
 			break;
 		case SelectorScene::PlayerType::Sunflower:
 			player_1P = new SunflowerPlayer();
+			player_1P->id = Player::PlayerID::P1;
 			break;
 	
 		}
@@ -294,10 +295,11 @@ private:
 		{
 		case SelectorScene::PlayerType::Peashooter:
 			player_2P = new PeashooterPlayer();
-
+			player_2P->id = Player::PlayerID::P2;
 			break;
 		case SelectorScene::PlayerType::Sunflower:
 			player_2P = new SunflowerPlayer();
+			player_2P->id = Player::PlayerID::P2;
 			break;
 
 		}
