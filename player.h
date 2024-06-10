@@ -50,8 +50,6 @@ public:
 		case WM_KEYUP:
 			isDown = 0;
 			break;
-		default:
-			return;
 		}
 
 		//根据按键和id赋值
@@ -66,6 +64,13 @@ public:
 			case 68://D
 				is_right_key_down= isDown;
 				break;
+			case 0x57://W
+				if (isDown)
+				{
+					jump();
+				}
+
+				break;
 			default:
 				break;
 			}
@@ -78,6 +83,12 @@ public:
 				break;
 			case VK_RIGHT://->
 				is_right_key_down = isDown;
+				break;
+			case VK_UP:
+				if (isDown)
+				{
+					jump();
+				}
 				break;
 			default:
 				break;
@@ -94,9 +105,8 @@ public:
 		pos.x += dis;
 	}
 	virtual void move_collide(float delta) {
-		velocity.y=G * delta;//重力速度累加
+		velocity.y += G * delta;//重力速度累加
 		pos += velocity * (float)delta;
-		
 		//平台单向碰撞检测
 		if (velocity.y>0)
 		{
@@ -120,10 +130,22 @@ public:
 						break;
 					}
 				}
+				
 			}
 		}
-	}
+		
+	
 
+
+	}
+	virtual void jump() {
+		//跳跃
+		if (velocity.y==0.0)
+		{
+			velocity.y += jump_speed;
+		}
+		
+	};
 public:
 	PlayerID id; //玩家id
 	Vector2<float> pos;//玩家位置
@@ -133,7 +155,8 @@ public:
 	bool is_right_key_down = 0;
 	bool is_facing_right = 1;//面向
 	const float speed=0.5f;//跑动速度
-	const float G = 0.0320f;//重力速度
+	const float jump_speed = -1.2f;//跳跃速度
+	const float G = 0.00320f;//重力速度
 	Vector2<float> velocity;//角色矢量速度
 
 	Animation* current_animation;//当前要播放的动画

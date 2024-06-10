@@ -55,6 +55,10 @@ int main() {
 		static DWORD last_tick_time = GetTickCount();
 		DWORD current_tick_time = GetTickCount();
 		DWORD delta_tick = current_tick_time - last_tick_time;
+		if (delta_tick>17)
+		{
+			delta_tick = 16;//³¬¹ý30ºÁÃë°´30ºÁÃë¼ÆËã
+		}
 		scene_manager->on_update(delta_tick); 
 		last_tick_time=current_tick_time;
 
