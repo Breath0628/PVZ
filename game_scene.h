@@ -78,6 +78,12 @@ public:
 		//玩家更新
 		player_1P->on_update(delta);
 		player_2P->on_update(delta);
+		main_camera.on_update(delta);
+		//子弹绘制
+		for (Bullet* bullet:bullet_list)
+		{
+			bullet->on_update(delta);
+		}
 	}
 
 	void on_draw(const Camera& camera) {
@@ -94,6 +100,11 @@ public:
 		//绘制玩家动画
 		player_1P->on_draw(camera);
 		player_2P->on_draw(camera);
+
+		for (Bullet* bullet : bullet_list)
+		{
+			bullet->on_draw(main_camera);
+		}
 
 		if (is_debug)
 		{

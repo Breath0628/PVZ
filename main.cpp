@@ -13,6 +13,8 @@
 #include "utli.h"
 #include "def.h"
 
+#include "bullet.h"
+
 Scene* menu_scene = nullptr;
 Scene* game_scene = nullptr;
 Scene* selector_scene = nullptr;
@@ -22,6 +24,7 @@ std::vector<Platform> platform_list; //平台对象
 bool is_debug=0;//调试模式
 Player* player_1P=nullptr;//1p对象
 Player* player_2P=nullptr;//2p对象
+std::vector<Bullet*>bullet_list;//子弹对象 
 
 int main() {
 	ExMessage msg;

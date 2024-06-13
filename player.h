@@ -3,18 +3,27 @@
 #include <graphics.h>
 #include "vector2.h"
 #include "platform.h"
-
+#include "bullet.h"
+#include "player_id.h"
+extern std::vector<Bullet*>bullet_list;//子弹对象  
 extern std::vector<Platform> platform_list; //平台对象
+extern Camera main_camera;
+
+
 class Player
 {
 public:
-	Player() { current_animation = &animation_idle_right; };
-	~Player();
+	Player() { 
+		current_animation = &animation_idle_right;
+		//攻击定时器设置
+		timer_attack.set_wait_time(attack_cd);
+		timer_attack.set_one_shot(1);
+		timer_attack.set_callback([&]() {
+			can_attck = 1;
+			});
 	
-	enum class PlayerID//识别玩家
-	{
-		P1,P2
 	};
+	~Player();
 	
 	virtual void on_update(int delta) {
 
@@ -32,6 +41,7 @@ public:
 			//静止
 			current_animation = is_facing_right ? &animation_idle_right : &animation_idle_left;
 		}
+		timer_attack.on_update(delta);
 		move_collide(delta);
 		current_animation->on_update(delta);
 	}
@@ -55,7 +65,7 @@ public:
 		//根据按键和id赋值
 		switch (id)
 		{
-		case Player::PlayerID::P1:
+		case PlayerID::P1:
 			switch (msg.vkcode)
 			{
 			case 65://A
@@ -69,13 +79,25 @@ public:
 				{
 					jump();
 				}
-
+				break;
+			case 0x46://F普通攻击
+				if (can_attck) {
+					on_attack();
+					can_attck=0;
+					timer_attack.restart();
+				}
+				break;
+			case 0x47://G键特殊攻击
+				if (mp >= 100) {
+					on_attack_ex();
+					mp =0;
+				}
 				break;
 			default:
 				break;
 			}
 			break;
-		case Player::PlayerID::P2:
+		case PlayerID::P2:
 			switch (msg.vkcode)
 			{
 			case VK_LEFT://<-
@@ -90,6 +112,19 @@ public:
 					jump();
 				}
 				break;
+			case VK_OEM_PERIOD://.普通攻击
+				if (can_attck) {
+					on_attack();
+					can_attck = 0;
+					timer_attack.restart();
+				}
+				break;
+			case VK_OEM_2:// ?键特殊攻击
+				if (mp >= 100) {
+					on_attack_ex();
+					mp = 0;
+				}
+				break;
 			default:
 				break;
 			}
@@ -101,6 +136,7 @@ public:
 	}
 
 	virtual void run(float dis) {
+		if (is_attacking_ex)return;//特殊攻击不移动
 		//奔跑
 		pos.x += dis;
 	}
@@ -140,16 +176,34 @@ public:
 	}
 	virtual void jump() {
 		//跳跃
-		if (velocity.y==0.0)
+		if (velocity.y==0.0&&!is_attacking_ex)
 		{
 			velocity.y += jump_speed;
 		}
 		
 	};
+
+	virtual void on_attack() {//普通攻击
+
+
+	};
+	virtual void on_attack_ex(//特色攻击
+	) {};
+	
+
 public:
 	PlayerID id; //玩家id
 	Vector2<float> pos;//玩家位置
 	Vector2<float> size = {96,96};//玩家大小
+
+	bool can_attck = true;//是否可以攻击
+	int attack_cd;//攻击间隔
+	Timer timer_attack;//攻击冷却计时器
+	bool is_attacking_ex=0;//是否在进行特殊攻击
+
+	int mp = 0;//蓝条
+	int hp = 100;//红条
+
 	//键位是否被按下 -->判断移动 
 	bool is_left_key_down=0;
 	bool is_right_key_down = 0;
@@ -164,6 +218,8 @@ public:
 	Animation animation_idle_right;
 	Animation animation_run_left;
 	Animation animation_run_right;
+	Animation animation_attack_ex_left;//朝左特殊攻击动画
+	Animation animation_attack_ex_right;
 
 };
 

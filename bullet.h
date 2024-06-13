@@ -2,8 +2,10 @@
 #include "vector2.h"
 #include <graphics.h>
 #include <functional>
-#include "player.h"
+#include "player_id.h"
 #include "camera.h"
+
+
 
 class Bullet
 {
@@ -40,7 +42,9 @@ public:
 
 	}
 
+
 public:
+	PlayerID target_id;//子弹要碰撞的目标id
 	Vector2<float> size;//尺寸
 	Vector2<float> pos;//子弹位置
 	Vector2<float> velcity;//子弹速度
@@ -48,6 +52,6 @@ public:
 	bool valid = true;//子弹有效
 	bool can_remove = false;//可以移除
 	std::function<void()> callback;//子弹碰撞后回调函数
-	Player::PlayerID target_id;//子弹要碰撞的目标id
+
 };
 

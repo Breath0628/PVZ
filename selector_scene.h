@@ -283,11 +283,11 @@ private:
 		{
 		case SelectorScene::PlayerType::Peashooter:
 			player_1P = new PeashooterPlayer();
-			player_1P->id = Player::PlayerID::P1;
+			player_1P->id = PlayerID::P1;
 			break;
 		case SelectorScene::PlayerType::Sunflower:
 			player_1P = new SunflowerPlayer();
-			player_1P->id = Player::PlayerID::P1;
+			player_1P->id = PlayerID::P1;
 			break;
 	
 		}
@@ -295,11 +295,11 @@ private:
 		{
 		case SelectorScene::PlayerType::Peashooter:
 			player_2P = new PeashooterPlayer();
-			player_2P->id = Player::PlayerID::P2;
+			player_2P->id = PlayerID::P2;
 			break;
 		case SelectorScene::PlayerType::Sunflower:
 			player_2P = new SunflowerPlayer();
-			player_2P->id = Player::PlayerID::P2;
+			player_2P->id = PlayerID::P2;
 			break;
 
 		}

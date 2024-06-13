@@ -7,10 +7,10 @@ extern Camera main_camera;
 extern Atlas atlas_sun_ex;
 extern Atlas atlas_sun_ex_explode;
 
-class SunBulletSPE:public Bullet
+class SunBulletEX:public Bullet
 {
 public:
-	SunBulletSPE() {
+	SunBulletEX() {
 		size = { 288 ,288 };
 		damage = 20;
 		//配置动画
@@ -25,11 +25,11 @@ public:
 		//对齐动画帧图偏移量
 		IMAGE* frame_idle = animation_idle.get_frame();
 		IMAGE* frame_explode = animation_explode.get_frame();
-		explode_render_offset = { (frame_idle->getwidth() - frame_explode->getwidth()) / 2,
-									(frame_idle->getheight() - frame_explode->getheight()) / 2
+		explode_render_offset = { (int)((frame_idle->getwidth() - frame_explode->getwidth()) / 2),
+									(int)((frame_idle->getheight() - frame_explode->getheight()) / 2)
 		};
 	};
-	~SunBulletSPE();
+	~SunBulletEX();
 
 	void on_collide() {
 		Bullet::on_collide();
@@ -73,7 +73,7 @@ public:
 private:
 	Animation animation_idle;//日光子弹默认闪烁动画
 	Animation animation_explode;//日光子弹爆炸动画
-	Vector2<float> explode_render_offset;//爆炸动画渲染偏移
+	Vector2<int> explode_render_offset;//爆炸动画渲染偏移
 	const float G = 0.003f;
 };
 
